@@ -1,6 +1,6 @@
 <?php
 /**
- * @name IndexController
+ * @name Index
  * @author lenovo-pc\lenovo
  * @desc 默认控制器
  * @see http://www.php.net/manual/en/class.yaf-controller-abstract.php

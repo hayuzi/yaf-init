@@ -13,6 +13,9 @@ class PassportController extends Yaf_Controller_Abstract {
      * 对于如下的例子, 当访问http://yourhost/sample/index/index/index/name/lenovo-pc\lenovo 的时候, 你就会发现不同
      */
     public function indexAction($name = "TestTheModules") {
+
+        throw new Local_Exception_AbstractException('throw new Exception_AbstractException');
+
         //1. fetch query
         $get = $this->getRequest()->getQuery("get", "default value");
 

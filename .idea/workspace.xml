@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="169c775c-2f9c-4fe4-9747-162df33acfc3" name="Default" comment="">
+    <list default="true" id="169c775c-2f9c-4fe4-9747-162df33acfc3" name="Default" comment="1111111">
+      <change beforePath="" afterPath="$PROJECT_DIR$/application/library/Local/Entity/Users.php" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/application/library/Local/Entity/UsersDemo.php" />
       <change beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -37,8 +39,28 @@
       <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="1" column="20" lean-forward="false" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
+            <state relative-caret-position="0">
+              <caret line="0" column="5" lean-forward="false" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="application.ini" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/conf/application.ini">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="427">
+              <caret line="24" column="18" lean-forward="true" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Users.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/library/Local/Entity/Users.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="22" column="16" lean-forward="true" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -173,6 +195,12 @@
               <item name="yaf" type="b2602c69:ProjectViewProjectNode" />
               <item name="yaf" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="application" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="controllers" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="yaf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="yaf" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="application" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="library" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
@@ -181,6 +209,14 @@
               <item name="application" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="library" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="Local" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="yaf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="yaf" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="application" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="library" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Local" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Entity" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="yaf" type="b2602c69:ProjectViewProjectNode" />
@@ -203,19 +239,19 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\022_pro\php\yaf\application\library\Local" />
+      <recent name="F:\022_pro\php\yaf\conf" />
+      <recent name="F:\022_pro\php\yaf\application\library\Local\entity" />
+      <recent name="F:\022_pro\php\yaf\application\library\Local\Entity" />
+      <recent name="F:\022_pro\php\yaf\application\modules\Admin\controllers" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\022_pro\php\yaf\application\library\Local" />
       <recent name="F:\022_pro\php\yaf\application\library" />
       <recent name="F:\022_pro\php\yaf\conf" />
       <recent name="F:\022_pro\php\yaf\application\library\Common" />
       <recent name="F:\022_pro\php\yaf\application\modules" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\022_pro\php\yaf\conf" />
-      <recent name="F:\022_pro\php\yaf\application\library\Local\entity" />
-      <recent name="F:\022_pro\php\yaf\application\library\Local\Entity" />
-      <recent name="F:\022_pro\php\yaf\application\modules\Admin\controllers" />
-      <recent name="F:\022_pro\php\yaf\application\index\views" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -247,7 +283,7 @@
       <workItem from="1512920160876" duration="54000" />
       <workItem from="1513089261539" duration="5861000" />
       <workItem from="1513257900374" duration="11013000" />
-      <workItem from="1513270868129" duration="219000" />
+      <workItem from="1513270868129" duration="318000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1512911901642</created>
@@ -277,11 +313,18 @@
       <option name="project" value="LOCAL" />
       <updated>1513271038760</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="1111111">
+      <created>1513271093468</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1513271093468</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23793000" />
+    <option name="totallyTimeSpent" value="23892000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -653,8 +696,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/library/Local/Entity/Users.php" />
-    <entry file="file://$PROJECT_DIR$/application/library/Local/entity/UsersDemo.php">
+    <entry file="file://$PROJECT_DIR$/application/library/Local/Entity/UsersDemo.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="621">
           <caret line="27" column="22" lean-forward="false" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
@@ -670,14 +712,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/conf/application.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="24" column="18" lean-forward="true" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/conf/application.ini.sample">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="372">
@@ -686,10 +720,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/conf/application.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="427">
+          <caret line="24" column="18" lean-forward="true" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/library/Local/Entity/Users.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="22" column="16" lean-forward="true" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="20" lean-forward="false" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
+        <state relative-caret-position="0">
+          <caret line="0" column="5" lean-forward="false" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
           <folding />
         </state>
       </provider>

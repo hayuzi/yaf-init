@@ -1,0 +1,13 @@
+parameters:
+    database_driver: pdo_mysql
+    database_host: 106.15.
+    database_port: 3306
+    database_name: XGC
+    database_user: root
+    database_password: 'root'
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    locale: zh_CN
+    secret: 5528ad9e524432c85485b11e734dcc9c9b2670b5

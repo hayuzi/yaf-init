@@ -6,7 +6,10 @@
  * Time: 23:48
  */
 
-class Local_Exception_AbstractException extends Yaf_Exception
+namespace Local\Exception;
+
+
+class AbstractException extends \Yaf\Exception
 {
 
     public function __construct($message = "", $code = 0, Throwable $previous = null)

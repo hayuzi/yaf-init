@@ -5,7 +5,7 @@
  * @see http://www.php.net/manual/en/yaf-dispatcher.catchexception.php
  * @author lenovo-pc\lenovo
  */
-class ErrorController extends Yaf_Controller_Abstract {
+class ErrorController extends \Yaf\Controller_Abstract {
 
 
 
@@ -23,11 +23,11 @@ class ErrorController extends Yaf_Controller_Abstract {
         // 自定义异常处理方式
         try {
             throw $exception;
-        } catch (Yaf_Exception_LoadFailed $e) {
+        } catch (\Yaf\Exception_LoadFailed $e) {
             //加载失败
             // 此处可以自定义逻辑 ( 暂时只是复用, 后期可以按照自己定义的规则处理 )
             $this->getView()->assign("exception", $e);
-        } catch (Yaf_Exception $e) {
+        } catch (\Yaf\Exception $e) {
             //其他错误
             $this->getView()->assign("exception", $e);
         }

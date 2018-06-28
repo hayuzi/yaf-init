@@ -5,7 +5,11 @@
  * @desc 默认控制器
  * @see http://www.php.net/manual/en/class.yaf-controller-abstract.php
  */
-class IndexController extends \Yaf\Controller_Abstract {
+
+use  Yaf\Controller_Abstract;
+
+class IndexController extends Controller_Abstract
+{
 
 	/** 
      * 默认动作

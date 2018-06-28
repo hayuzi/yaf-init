@@ -8,8 +8,9 @@
 
 namespace Local\Exception;
 
+use Yaf\Exception;
 
-class AbstractException extends \Yaf\Exception
+class AbstractException extends Exception
 {
 
     public function __construct($message = "", $code = 0, Throwable $previous = null)

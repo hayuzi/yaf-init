@@ -20,16 +20,10 @@ class IndexController extends Controller_Abstract
 		//1. fetch query
 		$get = $this->getRequest()->getQuery("get", "default value");
 
-		$em = $em = \Yaf\Registry::get('entityManager');
-		$users = $em->getRepository(\Local\Entity\Users::class)->findAll();
 
-		// var_dump($users);
-
-		//2. fetch model
-		$model = new SampleModel();
-
+		var_dump($get);
 		//3. assign
-		$this->getView()->assign("content", $model->selectSample());
+		$this->getView()->assign("content", 'content');
 		$this->getView()->assign("name", $name);
 
 		//4. render by Yaf, 如果这里返回FALSE, Yaf将不会调用自动视图引擎Render模板

@@ -30,37 +30,5 @@ class Bootstrap extends \Yaf\Bootstrap_Abstract{
 	}
 
 
-	// 注册 doctrine2的 ORM ( 但是引入ORM 由于依赖过多 会降低性能 )
-	public function _initDoctrineOrm(){
-        $config = \Yaf\Registry::get('config');
-
-        // 指定entity文件存放位置
-        $entityFielPaths = [
-            APPLICATION_PATH . 'library/entity'
-        ];
-
-        // 指定开发模式
-        $isDevMode = $config['database']['isDevMode'];
-
-        // 设置数据库连接参数
-        $dbParams = [
-            'driver'    => $config['database']['params']['driver'],
-            'host'      => $config['database']['params']['host'],
-            'port'      => $config['database']['params']['port'],
-            'user'      => $config['database']['params']['user'],
-            'password'  => $config['database']['params']['password'],
-            'dbname'    => $config['database']['params']['dbname'],
-        ];
-
-        $config = Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration($entityFielPaths, $isDevMode);
-        $entityManager = Doctrine\ORM\EntityManager::create($dbParams, $config);
-
-        \Yaf\Registry::set('entityManager', $entityManager);
-
-        // 在其他位置使用 Registry::get获取注册的 orm
-        // $em = \Yaf\Registry::get('entityManager');
-    }
-
-
 
 }

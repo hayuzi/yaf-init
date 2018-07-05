@@ -21,7 +21,6 @@ class IndexController extends Controller_Abstract
 		$get = $this->getRequest()->getQuery("get", "default value");
 
 
-		var_dump($get);
 		//3. assign
 		$this->getView()->assign("content", 'content');
 		$this->getView()->assign("name", $name);

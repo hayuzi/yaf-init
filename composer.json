@@ -1,4 +1,9 @@
 {
+    "name": "hauyzi/yaf-init",
+    "type": "project",
+    "description": "The Yaf Framework.",
     "require": {
+        "catfan/Medoo": "^1.6",
+        "qiniu/php-sdk": "^7.0"
     }
 }

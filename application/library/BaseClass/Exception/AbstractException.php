@@ -6,7 +6,7 @@
  * Time: 23:48
  */
 
-namespace Local\Exception;
+namespace BaseClass\Exception;
 
 use Yaf\Exception;
 

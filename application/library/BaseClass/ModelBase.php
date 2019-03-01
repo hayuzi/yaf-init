@@ -8,12 +8,10 @@
 
 namespace BaseClass;
 
+use DbLib\AbstractModelBase;
 
-class ModelBase
+class ModelBase extends AbstractModelBase
 {
-
-
-
 
 
 

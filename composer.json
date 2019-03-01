@@ -3,6 +3,9 @@
     "type": "project",
     "description": "The Yaf Framework.",
     "require": {
+        "ext-pdo": "*",
+        "ext-yaf": "*",
+        "ext-redis": "*",
         "catfan/Medoo": "^1.6",
         "qiniu/php-sdk": "^7.0"
     }

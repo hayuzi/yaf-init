@@ -55,7 +55,7 @@ abstract class AbstractModelBase
 
 
     /**
-     * @return \DbLib\Medoo
+     * @return Medoo
      */
     public function getDatabase()
     {

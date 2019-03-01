@@ -402,7 +402,7 @@ abstract class AbstractModelBase
     /**
      * @return array
      */
-    public function log()
+    public function getSqlArr()
     {
         return self::$database->log();
     }

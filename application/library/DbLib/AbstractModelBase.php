@@ -68,15 +68,18 @@ abstract class AbstractModelBase
         self::$database->pdo->beginTransaction();
     }
 
+
     public function commit()
     {
         self::$database->pdo->commit();
     }
 
+
     public function rollback()
     {
         self::$database->pdo->rollBack();
     }
+
 
     /**
      * 获取数据表名字
@@ -92,6 +95,7 @@ abstract class AbstractModelBase
         }
         return static::$tableName;
     }
+
 
     /**
      * @param string $tableName 表名

@@ -5,6 +5,8 @@
     "require": {
         "ext-pdo": "*",
         "ext-yaf": "*",
+        "ext-pcntl": "*",
+        "ext-posix": "*",
         "ext-redis": "*",
         "catfan/Medoo": "^1.6",
         "qiniu/php-sdk": "^7.0"

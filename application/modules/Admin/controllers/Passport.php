@@ -14,7 +14,7 @@ class PassportController extends \Yaf\Controller_Abstract {
      */
     public function indexAction($name = "TestTheModules") {
 
-        throw new \Local\Exception\AbstractException('\Local\Exception\AbstractException');
+        throw new \AppCore\BaseClass\Exception\AbstractException('\AppCore\BaseClass\Exception\AbstractException');
 
         //1. fetch query
         $get = $this->getRequest()->getQuery("get", "default value");

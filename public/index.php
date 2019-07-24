@@ -18,6 +18,7 @@ $config = parse_ini_file($iniPath, true);
 $errLevel = isset($config['common']['errorLevel']) ? $config['common']['errorLevel'] : 0;
 error_reporting($errLevel);
 
+// composer自动加载
 require APPLICATION_PATH . '/vendor/autoload.php';
 
 $application = new \Yaf\Application( $iniPath);

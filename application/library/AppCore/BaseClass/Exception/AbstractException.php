@@ -6,7 +6,7 @@
  * Time: 23:48
  */
 
-namespace BaseClass\Exception;
+namespace AppCore\BaseClass\Exception;
 
 use Yaf\Exception;
 

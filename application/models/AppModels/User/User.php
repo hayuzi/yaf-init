@@ -8,7 +8,7 @@
 
 namespace AppModels\User;
 
-use BaseClass\ModelBase;
+use AppCore\BaseClass\ModelBase;
 
 class UserModel extends ModelBase
 {

@@ -6,7 +6,7 @@
  * Time: 下午10:48
  */
 
-namespace BaseClass;
+namespace AppCore\BaseClass;
 
 
 class RequestBase

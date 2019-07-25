@@ -10,5 +10,6 @@
         "ext-redis": "*",
         "catfan/Medoo": "^1.6",
         "qiniu/php-sdk": "^7.0"
-    }
+    },
+    "minimum-stability": "master"
 }

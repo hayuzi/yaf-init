@@ -2,7 +2,7 @@
 application.directory = APPLICATION_PATH  "/application"
 application.dispatcher.catchException   = True
 application.dispatcher.throwException   = True
-application.modules     = "Index,Admin,Cli"
+application.modules     = "Index,Admin,Script"
 errorLevel              = E_ALL
 
 ;名称	值类型	默认值	说明

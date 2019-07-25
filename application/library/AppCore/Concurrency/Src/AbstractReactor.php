@@ -6,7 +6,16 @@
  * Time: 10:28 PM
  */
 
+/**
+ * 主处理程序中必须加入信号触发机制
+ * 注意：在子进程执行中如果注册了信号处理器的话，同样需要声明ticks触发
+ * 参考 https://www.php.net/manual/zh/function.pcntl-signal.php 中的更新说明
+ */
+declare(ticks = 1);
+
 namespace AppCore\Concurrency\Src;
+
+use Utils\TimeUtil;
 
 abstract class AbstractReactor
 {
@@ -17,10 +26,29 @@ abstract class AbstractReactor
     const MAX_CHILD_PROCESS_NUM = 10;
 
     /**
+     * @var int 当前进程是否是主进程
+     */
+    protected $isParent = true;
+
+    /**
+     * @var int 父进程的pid
+     */
+    protected $pPid;
+
+    /**
+     * @var callable 主进程在子进程为空的状态下是否需要自动退出
+     */
+    protected $pAutoExit;
+
+    /**
+     * @var bool 主进程是否被通知要退出
+     */
+    protected $pExitSigned = false;
+
+    /**
      * @var array 子进程的集合
      */
     protected $child = [];
-
 
     /**
      * @var callable 子进程的任务执行方法
@@ -33,22 +61,29 @@ abstract class AbstractReactor
     protected $taskQueue;
 
     /**
-     * @var callable 主进程在子进程为空的状态下是否需要自动退出
+     * @var int 任务拉取时间间隔
      */
-    protected $pAutoExit;
+    protected $taskPullGap = 0;
+
+    /**
+     * @var int 最后一次任务拉取时间
+     */
+    protected $lastTaskPull = 0;
 
 
     /**
      * AbstractReactor constructor.
-     * @param $cCallback
-     * @param int $maxTaskQueueNum
-     * @param bool $pAutoExit
+     * @param bool $pAutoExit 子进程执行完成都关闭的时候父级别进程是否自动退出（）
+     * @param int $maxTaskQueueNum 任务队列最大容量
+     * @param int $taskPullGap 拉取任务的时间间隔单位为毫秒
      */
-    public function __construct($cCallback, $maxTaskQueueNum = 10, $pAutoExit = true)
+    public function __construct($pAutoExit = false, $maxTaskQueueNum = 10, $taskPullGap = 1000)
     {
-        $this->taskQueue = new TaskQueue($maxTaskQueueNum);
-        $this->pAutoExit = $pAutoExit;
-        $this->cCallback = $cCallback;
+        $this->pAutoExit   = $pAutoExit;
+        $this->taskQueue   = new TaskQueue($maxTaskQueueNum);
+        $this->taskPullGap = $taskPullGap;
+        $this->pPid        = posix_getpid();
+        // echo "pPid: {$this->pPid} \n";
     }
 
 
@@ -57,39 +92,58 @@ abstract class AbstractReactor
      */
     final public function run()
     {
-        $isParentProcess = true;
 
         while (true) {
-            $this->pullTask();
             // 如果是父亲进程，执行fork或者监管
-            if ($isParentProcess) {
-                // 有任务分发并且进程未达到上限制的时候
-                if (!$this->taskQueue->isEmpty() && $this->child < self::MAX_CHILD_PROCESS_NUM) {
-                    $pid = pcntl_fork();
+            if ($this->isParent) {
+
+                // 拉取待处理任务
+                if (TimeUtil::milliTimeInt() - $this->lastTaskPull >= $this->taskPullGap) {
+                    $this->pullTask();
+                    $this->lastTaskPull = TimeUtil::milliTimeInt();
+                }
+
+                // 进程未有结束信号/有待处理任务/并且进程未达到上限制的时候
+                if (
+                    !$this->pExitSigned
+                    && !$this->taskQueue->isEmpty()
+                    && count($this->child) < self::MAX_CHILD_PROCESS_NUM
+                ) {
+                    $task = $this->taskQueue->pop();
+                    $pid  = pcntl_fork();
                     // 父进程和子进程都会执行下面代码
                     if ($pid == -1) {
-                        die('could not fork');
+                        die("could not fork\n");
                     } else if ($pid) {
                         // 父进程会得到子进程号，所以这里是父进程执行的逻辑
-                        $isParentProcess = true;
+                        $this->isParent = true;
                         $this->addChild($pid);
-                        echo "this is parent";
-                        // posix_kill($pid, SIGKILL);
-                        // pcntl_wait($status); // 等待子进程中断，防止子进程成为僵尸进程
                     } else {
                         // 子进程得到的$pid为0, 所以这里是子进程执行的逻辑。
-                        $task = $this->taskQueue->pop();
-                        call_user_func_array($this->cCallback, $task);
-                        // 子进程执行完结自动结束
-                        break;  // 跳出循环区间，结束进程
+                        $this->isParent = false;
+                        $this->callback($task);
+                        // 子进程任务结束之后，直接跳出循环，走后续逻辑结束进程
+                        break;
                     }
                 } else {
-                    // 维持主进程，监控子进程的执行, 每隔一秒检测一次
-                    sleep(1);
-                    if ($this->pAutoExit && count($this->child) == 0) {
-                        break; // 跳出循环区间，结束进程
+                    // 主进程监控子进程的执行状态
+                    foreach ($this->child as $key => $pid) {
+                        $res = pcntl_waitpid($pid, $status, WNOHANG);
+                        // If the process has already exited
+                        if ($res == -1 || $res > 0)
+                            unset($this->child[$key]);
+                    }
+                    usleep($this->taskPullGap * 1000); // 按照拉取任务的频率休眠
+
+                    // 任务执行完成之后，跳出循环区间，结束进程
+                    if (
+                        ($this->pAutoExit || $this->pExitSigned)
+                        && count($this->child) == 0) {
+                        break;
                     }
 
+                    // 主进程接收信号 10， 安全中断所有子进程
+                    pcntl_signal(SIGUSR1, [$this, 'sigHandler']);
                 }
             }
         }
@@ -102,10 +156,7 @@ abstract class AbstractReactor
      */
     protected function addChild($pid)
     {
-        $this->child[$pid] = [
-            'pid'     => $pid,
-            'startAt' => time(),
-        ];
+        $this->child[$pid] = $pid;
     }
 
 
@@ -115,5 +166,37 @@ abstract class AbstractReactor
      */
     abstract public function pullTask();
 
+
+    /**
+     * @param array $task
+     * @return mixed
+     */
+    abstract public function callback($task);
+
+
+    /**
+     * @param $signo
+     */
+    function sigHandler($signo)
+    {
+        switch ($signo) {
+            case SIGUSR1:
+                // 处理SIGUSR1信号
+                if ($this->isParent) {
+                    // 主进程接收，则通知所有子进程
+                    $this->pExitSigned = true;
+                    foreach ($this->child as $key => $pid) {
+                         echo "custom kill pid {$pid}\n";
+                        posix_kill($pid, SIGUSR1);
+                    }
+                } else {
+                     echo "child " . posix_getpid() . " exit\n";
+                    exit(); // 子进程直接结束
+                }
+                break;
+            default:
+                // 处理所有其他信号
+        }
+    }
 
 }

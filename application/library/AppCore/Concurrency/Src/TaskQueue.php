@@ -46,6 +46,15 @@ class TaskQueue
         return true;
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function count()
+    {
+        return $this->taskQueue->count();
+    }
+
     /**
      * @return mixed
      */

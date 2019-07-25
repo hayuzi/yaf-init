@@ -7,6 +7,7 @@
  */
 
 use AppCore\BaseClass\CliControllerBase;
+use AppCore\Concurrency\Sample\SampleReactor;
 
 /**
  * 测试控制器
@@ -30,11 +31,11 @@ class TestController extends CliControllerBase
     /**
      * 多进程并发测试，使用 pcntl
      */
-    public function concurrencyAction()
+    public function conAction()
     {
-
-
-
+        $reactor = new SampleReactor(false);
+        $reactor->run();
+        return false;
     }
 
 }

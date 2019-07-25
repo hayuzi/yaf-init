@@ -26,7 +26,7 @@ class Bootstrap extends \Yaf\Bootstrap_Abstract{
 
 	public function _initRoute(\Yaf\Dispatcher $dispatcher) {
 		// 在这里注册自己的路由协议,默认使用简单路由
-        // 注册cli脚本路由，请求方式: php public/index.php /cli/test/test --name1=value1 --name2=value2 ...
+        // 注册cli脚本路由，请求方式: php public/index.php /cli/test/test --name1=value1 ...
         $dispatcher->getRouter()->addRoute('cli', new CliRoute());
 	}
 

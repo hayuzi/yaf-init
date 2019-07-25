@@ -73,9 +73,9 @@ abstract class AbstractReactor
 
     /**
      * AbstractReactor constructor.
-     * @param bool $pAutoExit 子进程执行完成都关闭的时候父级别进程是否自动退出（）
-     * @param int $maxTaskQueueNum 任务队列最大容量
-     * @param int $taskPullGap 拉取任务的时间间隔单位为毫秒
+     * @param bool $pAutoExit       子进程执行完成都关闭的时候父级别进程是否自动退出（）
+     * @param int $maxTaskQueueNum  任务队列最大容量, 超出数量的任务不会推到队列
+     * @param int $taskPullGap      拉取任务的时间间隔单位为毫秒
      */
     public function __construct($pAutoExit = false, $maxTaskQueueNum = 10, $taskPullGap = 1000)
     {
@@ -163,11 +163,15 @@ abstract class AbstractReactor
     /**
      * 获取执行任务的方法
      *  该方法需要将要执行的task任务参数传递进来，参数格式为callback方法的参数数组.
+     *  由于目前封装的task队列有数量上限，所以该方法中需要使用者自己处理 task入队列的方法
+     *  但是请不要阻塞队列
      */
     abstract public function pullTask();
 
 
     /**
+     * task任务的具体执行处理方法
+     *  该方法需要尽量单纯，处理task事务即可
      * @param array $task
      * @return mixed
      */

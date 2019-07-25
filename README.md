@@ -27,7 +27,12 @@ yaf-init
 
 
 
+
 ### 2. 封装扩展的内容
+#### 2.1 基础调整
+- 在Bootstrap中统一禁用了模版渲染
+- 采用控制器应对action的方式 (yaf的控制器命名只能第一个字母大写)
+
 #### 2.1 封装了基础 model 类
 Model类采用 [Medoo](https://github.com/catfan/Medoo), 该类是基于PDO的封装, 但是非ORM形式，因而处理关联数据可能稍微有些不便。
 

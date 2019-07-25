@@ -10,7 +10,7 @@ namespace AppCore\BaseClass\Exception;
 
 use Yaf\Exception;
 
-class AbstractException extends Exception
+class AppCoreException extends Exception
 {
 
     public function __construct($message = "", $code = 0, \Throwable $previous = null)

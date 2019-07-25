@@ -7,6 +7,7 @@
  */
 
 use AppCore\BaseClass\CliControllerBase;
+use AppCore\BaseClass\Exception\AppCoreException;
 use AppCore\Concurrency\Sample\SampleReactor;
 
 /**

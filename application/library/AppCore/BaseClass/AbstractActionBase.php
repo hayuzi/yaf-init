@@ -11,6 +11,7 @@ namespace AppCore\BaseClass;
 
 use AppCore\BaseClass\Exception\AppCoreException;
 use Yaf\Action_Abstract;
+use Yaf\Registry;
 
 abstract class AbstractActionBase extends Action_Abstract
 {
@@ -26,9 +27,15 @@ abstract class AbstractActionBase extends Action_Abstract
     public $needLogin = false;
 
     /**
+     * 不使用 Yaf\Session, 借助redis实现分布式登陆管理
      * @var string 虚拟sessionId
      */
-    public $sessionId = '';
+    protected $sessionId;
+
+    /**
+     * 是否开启session
+     */
+    protected $sessionStart = true;
 
 
     /**
@@ -38,6 +45,7 @@ abstract class AbstractActionBase extends Action_Abstract
     {
         try {
             $this->_checkRequest();
+            $this->_init();
             $this->_preExec();
             $this->_exec();
             $this->_postExec();
@@ -49,6 +57,16 @@ abstract class AbstractActionBase extends Action_Abstract
             $this->_renderJson([], BaseErrorCode::SERVER_ERROR, BaseErrorCode::SERVER_ERROR_MSG);
         }
     }
+
+
+    /**
+     * ==============================================
+     *
+     * 以下区域是请求处理相关方法
+     *
+     * ==============================================
+     */
+
 
     /**
      * 可以继承重写这个类来统一处理请求数据
@@ -64,11 +82,64 @@ abstract class AbstractActionBase extends Action_Abstract
         }
     }
 
+
+    /**
+     * 从COOKIE中获取sessionId
+     *
+     * @return string
+     * @throws AppCoreException
+     */
+    public function _getSessionId()
+    {
+        if (!$this->sessionStart) {
+            throw new AppCoreException(
+                BaseErrorCode::VIRTUAL_SESSION_NOT_START_MSG,
+                BaseErrorCode::VIRTUAL_SESSION_NOT_START
+            );
+        }
+        if (is_null($this->sessionId)) {
+            $this->sessionId =
+                isset($_COOKIE[BaseConst::DEFAULT_SESSION_KEY]) ?
+                    $_COOKIE[BaseConst::DEFAULT_SESSION_KEY] :
+                    '';
+        }
+        return $this->sessionId;
+    }
+
+
+    /**
+     * ==============================================
+     *
+     * 以下区域是执行处理的相关方法
+     *
+     * ==============================================
+     */
+
+
+
+
     /**
      * 这个是封装的执行方法，必须要继承的类
      * @return mixed
      */
     abstract public function _exec();
+
+
+    public function _init()
+    {
+        if ($this->sessionStart && empty($_COOKIE[BaseConst::DEFAULT_SESSION_KEY])) {
+            // 初始化SESSIONID
+            $sessionId = session_create_id('app_core');
+            setcookie(
+                BaseConst::DEFAULT_SESSION_KEY,
+                $sessionId,
+                time() + BaseConst::THIRTY_DAYS_SECONDS,
+                '/',
+                Registry::get("config")->cookie_domain
+            );
+        }
+    }
+
 
     /**
      * 前置切面
@@ -78,6 +149,7 @@ abstract class AbstractActionBase extends Action_Abstract
         // ...
     }
 
+
     /**
      * 后置切面
      */
@@ -85,6 +157,15 @@ abstract class AbstractActionBase extends Action_Abstract
     {
         // ...
     }
+
+
+    /**
+     * ==============================================
+     *
+     * 以下区域是结果渲染相关方法
+     *
+     * ==============================================
+     */
 
 
     /**
@@ -121,6 +202,7 @@ abstract class AbstractActionBase extends Action_Abstract
         }
         $this->getResponse()->setBody($result->toJson());
     }
+
 
     /**
      * 渲染行结果

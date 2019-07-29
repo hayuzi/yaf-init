@@ -11,7 +11,6 @@ namespace AppCore\BaseClass;
 
 use AppCore\BaseClass\Exception\AppCoreException;
 use Yaf\Action_Abstract;
-use Yaf\Registry;
 
 abstract class AbstractActionBase extends Action_Abstract
 {
@@ -36,6 +35,11 @@ abstract class AbstractActionBase extends Action_Abstract
      * 是否开启session
      */
     protected $sessionStart = true;
+
+    /**
+     * @var string
+     */
+    protected $cookieDomain = '';
 
 
     /**
@@ -135,7 +139,7 @@ abstract class AbstractActionBase extends Action_Abstract
                 $sessionId,
                 time() + BaseConst::THIRTY_DAYS_SECONDS,
                 '/',
-                Registry::get("config")->cookie_domain
+                $this->cookieDomain
             );
         }
     }

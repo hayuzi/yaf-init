@@ -12,5 +12,6 @@ namespace AppCore\BaseClass;
 class BaseConst
 {
     const QUERY_OK_CODE = 200;
+    const QUERY_OK_MSG  = 'success';
 
 }

@@ -6,10 +6,10 @@
  * Time: 15:06
  */
 
-use AppCore\BaseClass\ActionBase;
+use AppCore\BaseClass\AbstractActionBase;
 
 
-class TestAction extends ActionBase
+class TestAction extends AbstractActionBase
 {
 
     public function execute()

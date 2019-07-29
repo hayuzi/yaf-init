@@ -18,4 +18,5 @@ class BaseErrorCode
     const REQUEST_METHOD_ERROR     = 403003;
     const REQUEST_METHOD_ERROR_MSG = '请求方法错误';
 
+
 }

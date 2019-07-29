@@ -94,7 +94,7 @@ abstract class AbstractActionBase extends Action_Abstract
     public function _renderSuccessJson($retData)
     {
         if (!$retData) {
-            $retData = [];
+            $retData = ['result' => 'success',];
         }
         $this->_renderJson($retData);
     }

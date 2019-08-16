@@ -21,11 +21,9 @@ errorLevel              = E_ALL
 
 
 [product : common]
+cookieDomain                = ''
 log.path                    = "/phplogs/personal/open_api.log."
-openApi.hostname            = "http://172.17.0.1:80"
-internalApi.hostname        = "http://172.17.0.1:83"
-image.config.host           = "https://default.image.yourhost.com/"
-payment.debug               = false
+
 
 
 ;database  数组配置在bootstrap中

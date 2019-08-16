@@ -11,6 +11,7 @@ namespace AppCore\BaseClass;
 
 use AppCore\BaseClass\Exception\AppCoreException;
 use Yaf\Action_Abstract;
+use Yaf\Registry;
 
 abstract class AbstractActionBase extends Action_Abstract
 {
@@ -35,11 +36,6 @@ abstract class AbstractActionBase extends Action_Abstract
      * 是否开启session
      */
     protected $sessionStart = true;
-
-    /**
-     * @var string
-     */
-    protected $cookieDomain = '';
 
 
     /**
@@ -73,7 +69,7 @@ abstract class AbstractActionBase extends Action_Abstract
 
 
     /**
-     * 可以继承重写这个类来统一处理请求数据
+     * 可以继承重写这个方法来统一处理请求数据
      * @throws AppCoreException
      */
     public function _checkRequest()
@@ -120,8 +116,6 @@ abstract class AbstractActionBase extends Action_Abstract
      */
 
 
-
-
     /**
      * 这个是封装的执行方法，必须要继承的类
      * @return mixed
@@ -139,7 +133,7 @@ abstract class AbstractActionBase extends Action_Abstract
                 $sessionId,
                 time() + BaseConst::THIRTY_DAYS_SECONDS,
                 '/',
-                $this->cookieDomain
+                Registry::get('config')->cookieDomain
             );
         }
     }

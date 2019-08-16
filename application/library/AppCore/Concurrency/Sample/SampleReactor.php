@@ -19,7 +19,8 @@ class SampleReactor extends AbstractReactor
 
     /**
      * 定义获取任务的方法
-     *
+     *      在这个方法里，将需要处理的任务推送到队列中
+     *      $this->taskQueue->push($task);
      * @return bool
      */
     public function pullTask()

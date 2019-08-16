@@ -163,15 +163,17 @@ abstract class AbstractReactor
     /**
      * 获取执行任务的方法
      *  该方法需要将要执行的task任务参数传递进来，参数格式为callback方法的参数数组.
+     *  该方法中最重要的处理代码在于  $this->taskQueue->push($task);
      *  由于目前封装的task队列有数量上限，所以该方法中需要使用者自己处理 task入队列的方法
      *  但是请不要阻塞队列
+     *
      */
     abstract public function pullTask();
 
 
     /**
      * task任务的具体执行处理方法
-     *  该方法需要尽量单纯，处理task事务即可
+     *  该方法需要尽量单纯，处理task事务即可，callback 中调用自己的业务处理方法
      * @param array $task
      * @return mixed
      */

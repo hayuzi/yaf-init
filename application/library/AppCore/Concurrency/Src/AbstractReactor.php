@@ -11,7 +11,7 @@
  * 注意：在子进程执行中如果注册了信号处理器的话，同样需要声明ticks触发
  * 参考 https://www.php.net/manual/zh/function.pcntl-signal.php 中的更新说明
  */
-declare(ticks = 1);
+declare(ticks=1);
 
 namespace AppCore\Concurrency\Src;
 
@@ -73,9 +73,9 @@ abstract class AbstractReactor
 
     /**
      * AbstractReactor constructor.
-     * @param bool $pAutoExit       子进程执行完成都关闭的时候父级别进程是否自动退出（）
-     * @param int $maxTaskQueueNum  任务队列最大容量, 超出数量的任务不会推到队列
-     * @param int $taskPullGap      拉取任务的时间间隔单位为毫秒
+     * @param bool $pAutoExit 子进程执行完成都关闭的时候父级别进程是否自动退出（）
+     * @param int $maxTaskQueueNum 任务队列最大容量, 超出数量的任务不会推到队列
+     * @param int $taskPullGap 拉取任务的时间间隔单位为毫秒
      */
     public function __construct($pAutoExit = false, $maxTaskQueueNum = 10, $taskPullGap = 1000)
     {
@@ -189,16 +189,22 @@ abstract class AbstractReactor
             case SIGUSR1:
                 // 处理SIGUSR1信号
                 if ($this->isParent) {
-                    // 主进程接收，则通知所有子进程
+                    // 主进程接收信号，标记为需要结束
                     $this->pExitSigned = true;
+                    // 通知所有子进程
                     foreach ($this->child as $key => $pid) {
-                         echo "custom kill pid {$pid}\n";
+                        echo "custom kill pid {$pid}\n";
                         posix_kill($pid, SIGUSR1);
                     }
                 } else {
-                     echo "child " . posix_getpid() . " exit\n";
-                    exit(); // 子进程直接结束
+                    echo "child " . posix_getpid() . " need exit\n";
+                    // 子进程被标记为结束状态，需要在回调方法中处理安全结束逻辑.
+                    // 如果需要强制结束，可以直接给子进程发送结束信号
+                    $this->pExitSigned = true;
                 }
+                break;
+            case SIGUSR2:
+                // 本人docker的php环境中测试 SIGUSR2 的时候，主进程直接被中断，子进程不受控，建议不使用该信号管理。
                 break;
             default:
                 // 处理所有其他信号

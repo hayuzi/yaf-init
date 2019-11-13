@@ -44,7 +44,7 @@ TODO
 
 
 #### 2.4 其他的功能库
-##### 2.4.1 基于pcntl与posix的并发事务处理封装
+##### 2.4.1 基于pcntl与posix的多进程业务处理封装
 请参考 AppCore\Concurrency\Sample\SampleReactor来处理
 
 

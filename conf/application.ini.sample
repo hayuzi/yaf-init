@@ -29,6 +29,7 @@ log.path                    = "/phplogs/personal/open_api.log."
 ;database  数组配置在bootstrap中
 database.isDevMode = True
 database.params.driver = "pdo_mysql"
+database.params.charset = "utf8mb4"
 database.params.host = "localhost"
 database.params.port = "3306"
 database.params.user = "root"

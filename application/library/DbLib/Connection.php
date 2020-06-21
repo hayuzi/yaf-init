@@ -43,13 +43,13 @@ class Connection
             if (is_null($options)) {
                 $options    = [
                     'database_type'     => 'mysql',
-                    'database_name'     => $config->database->config->db,
-                    'server'            => $config->database->config->host,
-                    'username'          => $config->database->config->username,
-                    'password'          => $config->database->config->password,
+                    'database_name'     => $config->database->params->dbname,
+                    'server'            => $config->database->params->host,
+                    'username'          => $config->database->params->user,
+                    'password'          => $config->database->params->password,
                     //
-                    'charset'           => $config->database->config->charset,
-                    'port'              => $config->database->config->prot,
+                    'charset'           => $config->database->params->charset,
+                    'port'              => $config->database->params->prot,
                     'prefix'            => '',      // [optional] Table prefix
                     'logging'           => true,   // [optional] Enable logging (Logging is disabled by default for better performance)
                     'option'            => [

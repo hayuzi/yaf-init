@@ -35,7 +35,7 @@ abstract class AbstractActionBase extends Action_Abstract
     /**
      * 是否开启session
      */
-    protected $sessionStart = true;
+    protected $sessionStart = false;
 
 
     /**
@@ -127,7 +127,7 @@ abstract class AbstractActionBase extends Action_Abstract
     {
         if ($this->sessionStart && empty($_COOKIE[BaseConst::DEFAULT_SESSION_KEY])) {
             // 初始化SESSIONID
-            $sessionId = session_create_id('app_core');
+            $sessionId = session_create_id('app');
             setcookie(
                 BaseConst::DEFAULT_SESSION_KEY,
                 $sessionId,
@@ -170,7 +170,7 @@ abstract class AbstractActionBase extends Action_Abstract
      * 渲染成功的json数据
      * @param $retData
      */
-    public function _renderSuccessJson($retData)
+    public function _renderSuccessJson($retData = [])
     {
         if (!$retData) {
             $retData = ['result' => 'success',];

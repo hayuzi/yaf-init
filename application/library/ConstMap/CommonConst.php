@@ -6,6 +6,8 @@
  * Time: 下午10:44
  */
 
+namespace ConstMap;
+
 class CommonConst
 {
 

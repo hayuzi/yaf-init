@@ -6,7 +6,7 @@
  * Time: 上午10:51
  */
 
-namespace DbLib;
+namespace AppCore\DbLib;
 
 /**
  * DB 类获取实例所用

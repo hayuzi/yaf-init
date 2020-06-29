@@ -6,11 +6,11 @@
  * Time: 上午10:23
  */
 
-namespace DbLib\Demo;
+namespace AppCore\DbLib\Demo;
 
-use DbLib\DB;
-use DWDData\Exception;
-use App\Models\ConstMap\SystemErrorCode;
+use AppCore\DbLib\DB;
+use AppCore\BaseClass\Exception\AppCoreException;
+use AppCore\BaseClass\BaseErrorCode;
 
 class Operation
 {
@@ -48,9 +48,9 @@ class Operation
 
             $res    = $model->insert(['test' => 'test']);
             if (!$res->rowCount()) {
-                throw new Exception(
-                    SystemErrorCode::MYSQL_COMMON_ERROR_MSG,
-                    SystemErrorCode::MYSQL_COMMON_ERROR
+                throw new AppCoreException(
+                    BaseErrorCode::MYSQL_COMMON_ERROR_MSG,
+                    BaseErrorCode::MYSQL_COMMON_ERROR
                 );
             }
             $id     = $model->getLastInsertId();

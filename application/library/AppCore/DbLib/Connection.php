@@ -6,7 +6,7 @@
  * Time: 上午10:38
  */
 
-namespace DbLib;
+namespace AppCore\DbLib;
 
 use PDO;
 use Medoo\Medoo;

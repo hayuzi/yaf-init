@@ -6,10 +6,10 @@
  * Time: 上午11:13
  */
 
-namespace DbLib;
+namespace AppCore\DbLib;
 
+use AppCore\Common\Util;
 use Medoo\Medoo;
-use Utils\StringFmt;
 
 /**
  * https://medoo.in/
@@ -88,9 +88,9 @@ abstract class AbstractModelBase
     public static function getTableName()
     {
         if (!static::$tableName) {
-            $classNameParse = explode("\\",__CLASS__);
-            $modelName = StringFmt::camel2snake(array_pop($classNameParse));
-            $tableName = str_replace('_model', '', $modelName);
+            $classNameParse    = explode("\\", __CLASS__);
+            $modelName         = Util::camel2snake(array_pop($classNameParse));
+            $tableName         = str_replace('_model', '', $modelName);
             static::$tableName = $tableName;
         }
         return static::$tableName;
@@ -137,15 +137,15 @@ abstract class AbstractModelBase
         if (key_exists(0, $data)) {
             foreach ($data as $k => $v) {
                 if (empty($v['created_at'])) {
-                    $data[$k]['created_at'] = time();
+                    $data[$k]['created_at'] = date('Y-m-d H:i:s');
                 }
-                $data[$k]['updated_at'] = time();
+                $data[$k]['updated_at'] = date('Y-m-d H:i:s');
             }
         } else {
             if (empty($data['created_at'])) {
-                $data['created_at'] = time();
+                $data['created_at'] = date('Y-m-d H:i:s');
             }
-            $data['updated_at'] = time();
+            $data['updated_at'] = date('Y-m-d H:i:s');
         }
         return self::$database->insert(static::getTableName(), $data);
     }
@@ -173,7 +173,20 @@ abstract class AbstractModelBase
     public function update($data, $where = null)
     {
         if (empty($data['updated_at'])) {
-            $data['updated_at'] = time();
+            $data['updated_at'] = date('Y-m-d H:i:s');
+        }
+        return self::$database->update(static::getTableName(), $data, $where);
+    }
+
+
+    /**
+     * @param $where
+     * @return bool|\PDOStatement
+     */
+    public function softDelete($where)
+    {
+        if (empty($data['deleted_at'])) {
+            $data['deleted_at'] = date('Y-m-d H:i:s');
         }
         return self::$database->update(static::getTableName(), $data, $where);
     }
@@ -409,6 +422,13 @@ abstract class AbstractModelBase
     public function getSqlArr()
     {
         return self::$database->log();
+    }
+
+    /**
+     * @return $this
+     */
+    public function debug(){
+        return self::$database->debug();
     }
 
 }

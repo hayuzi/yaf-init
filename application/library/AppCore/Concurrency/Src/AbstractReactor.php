@@ -15,7 +15,7 @@ declare(ticks=1);
 
 namespace AppCore\Concurrency\Src;
 
-use Utils\TimeUtil;
+use AppCore\Common\Util;
 
 abstract class AbstractReactor
 {
@@ -98,9 +98,9 @@ abstract class AbstractReactor
             if ($this->isParent) {
 
                 // 拉取待处理任务
-                if (TimeUtil::milliTimeInt() - $this->lastTaskPull >= $this->taskPullGap) {
+                if (Util::milliTimeInt() - $this->lastTaskPull >= $this->taskPullGap) {
                     $this->pullTask();
-                    $this->lastTaskPull = TimeUtil::milliTimeInt();
+                    $this->lastTaskPull = Util::milliTimeInt();
                 }
 
                 // 进程未有结束信号/有待处理任务/并且进程未达到上限制的时候

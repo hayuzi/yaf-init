@@ -6,7 +6,7 @@
  * Time: 上午11:27
  */
 
-namespace DbLib;
+namespace AppCore\DbLib;
 
 class DB
 {

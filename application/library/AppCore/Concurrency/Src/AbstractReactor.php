@@ -141,10 +141,13 @@ abstract class AbstractReactor
                         && count($this->child) == 0) {
                         break;
                     }
-
-                    // 主进程接收信号 10， 安全中断所有子进程
-                    pcntl_signal(SIGUSR1, [$this, 'sigHandler']);
                 }
+
+                // 进程接收信号 10
+                pcntl_signal(SIGUSR1, [$this, 'sigHandler']);
+                // 进程接收信号 12
+                pcntl_signal(SIGUSR2, [$this, 'sigHandler']);
+
             }
         }
     }
@@ -181,6 +184,8 @@ abstract class AbstractReactor
 
 
     /**
+     * sigHandler 方法必须要针对每一个需要处理的信号量单独注册
+     *
      * @param $signo
      */
     function sigHandler($signo)
@@ -204,7 +209,21 @@ abstract class AbstractReactor
                 }
                 break;
             case SIGUSR2:
-                // 本人docker的php环境中测试 SIGUSR2 的时候，主进程直接被中断，子进程不受控，建议不使用该信号管理。
+                // 处理SIGUSR2信号
+                if ($this->isParent) {
+                    // 主进程接收信号，标记为需要结束
+                    $this->pExitSigned = true;
+                    // 通知所有子进程
+                    foreach ($this->child as $key => $pid) {
+                        echo "custom kill pid {$pid}\n";
+                        posix_kill($pid, SIGUSR1);
+                    }
+                } else {
+                    echo "child " . posix_getpid() . " need exit\n";
+                    // 子进程被标记为结束状态，需要在回调方法中处理安全结束逻辑.
+                    // 如果需要强制结束，可以直接给子进程发送结束信号
+                    $this->pExitSigned = true;
+                }
                 break;
             default:
                 // 处理所有其他信号

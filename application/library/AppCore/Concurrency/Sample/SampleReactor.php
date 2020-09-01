@@ -47,9 +47,7 @@ class SampleReactor extends AbstractReactor
     public function callback($task)
     {
         // 必须同时在子进程中做信号触发，这样在接收到固定信息的时候可以管控子进程
-        declare(ticks = 1);
-        // 安装信号处理器
-        pcntl_signal(SIGUSR1, [$this, 'sigHandler']);
+        declare(ticks=1);
         $i = 1;
         while (true) {
             // --------------------------------------

@@ -25,10 +25,10 @@ class SampleReactor extends AbstractReactor
      */
     public function pullTask()
     {
-        if ($this->taskPushNum >= 2) {
+        if ($this->taskPushNum >= 5) {
             return false;
         }
-        for ($i = 0; $i < 2; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $task = [$i, 'test'];
             $this->taskQueue->push($task);
             $this->taskPushNum++;

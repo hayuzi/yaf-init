@@ -216,7 +216,7 @@ abstract class AbstractReactor
                     // 通知所有子进程
                     foreach ($this->child as $key => $pid) {
                         echo "custom kill pid {$pid}\n";
-                        posix_kill($pid, SIGUSR1);
+                        posix_kill($pid, SIGUSR2);
                     }
                 } else {
                     echo "child " . posix_getpid() . " need exit\n";

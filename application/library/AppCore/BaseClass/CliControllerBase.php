@@ -25,7 +25,6 @@ class CliControllerBase extends ControllerBase
      */
     public function init()
     {
-        parent::init();
         if (php_sapi_name() !== 'cli') {
             throw new Exception('无访问权限', 403);
         }

@@ -55,6 +55,10 @@ class SampleReactor extends AbstractReactor
             if ($this->pExitSigned) {
                 break; // 在循环开始时候，处理安全退出逻辑，这样的话下面的程序会处理完成再停止
             }
+            if (posix_getppid() === 1) {
+                break; // 如果父进程异常，子进程成为守护进程, 此处可以直接中断子进程
+            }
+
             sleep(1);
             $i++;
             echo "- pPid: {$this->pPid}  - pid: " . posix_getpid() . " task i_{$i}：" . json_encode($task, JSON_UNESCAPED_UNICODE) . " \n";
